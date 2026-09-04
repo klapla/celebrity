@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CELEBRITY STUDIO | Премиальное Бьюти-Пространство и Школа Ярославль</title>
+    <!-- Google Fonts: Ультрамодный Serif для заголовков и чистый Sans-Serif для текста -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           1. ПЕРЕМЕННЫЕ И БАЗОВЫЕ СТИЛИ (Glossy Luxury Framework)
+           ========================================================================== */
+        :root {
+            --color-black: #0A0A0A;
+            --color-white: #FFFFFF;
+            --color-gold: #D4AF37;
+            --color-platinum: #E2E8F0;
+            --color-dark-gray: #121212;
+            --color-card-bg: #181818;
+            --color-muted: #8E8E93;
+            --color-border: rgba(255, 255, 255, 0.07);
+            --font-luxury: 'Cormorant Garamond', serif;
+            --font-main: 'Montserrat', sans-serif;
+            --transition-premium: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-slow: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Нативный ультрастабильный скролл браузера, защищающий от зависаний */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            font-family: var(--font-main);
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+            overflow-y: auto;
+            opacity: 1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition-premium);
+        }
+
+        li {
+            list-style: none;
+        }
+
+        button {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition-premium);
+        }
+
+        /* УЛЬТРАТОНКИЙ ПЛАТИНОВЫЙ СКРОЛЛБАР */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-black);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-platinum);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-gold);
+        }
+
+        /* ЖЕСТКАЯ СИСТЕМНАЯ ИЗОЛЯЦИЯ СТРАНИЦ ОТ НАСЛОЕНИЙ */
+        .page-container {
+            width: 100%;
+            min-height: 100vh;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-premium);
+            display: none !important;
+        }
+
+        .page-container.active {
+            display: block !important;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition-slow);
+        }
+
+        .reveal-element.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Эффект глянцевого блика (Shine Flash) */
+        .shine-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        .shine-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.15) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: skewX(-25deg);
+            transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 3;
+        }
+
+        .shine-card:hover::before {
+            left: 150%;
+        }
+
+        .shine-card:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: rgba(255, 255, 255, 0.25) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(232, 232, 240, 0.03) !important;
+        }
+
+        .shine-card:hover h4, 
+        .shine-card:hover h3 {
+            color: var(--color-gold);
+            transition: color 0.4s ease;
+        }
+
+        /* ПРЕМИАЛЬНЫЙ МАТОВЫЙ ПРЕЛОАДЕР */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--color-black);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .preloader-logo {
+            font-family: var(--font-luxury);
+            font-size: 3.5rem;
+            letter-spacing: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0;
+            transform: scale(0.85);
+            animation: preloaderFadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background: linear-gradient(to right, var(--color-white), var(--color-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes preloaderFadeIn {
+            0% { opacity: 0; transform: scale(0.85); filter: blur(10px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        /* СКВОЗНЫЕ ЭЛЕМЕНТЫ ДИЗАЙНА (Header & Footer) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 5%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.95), rgba(10,10,10,0));
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .logo {
+            font-family: var(--font-luxury);
+            font-size: 1.8rem;
+            letter-spacing: 0.4rem;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 50px;
+        }
+
+        .nav-menu:hover .nav-item:not(:hover) {
+            opacity: 0.25;
+            filter: blur(3px);
+        }
+
+        .nav-item {
+            transition: var(--transition-premium);
+        }
+
+        .nav-link {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25rem;
+            position: relative;
+            padding: 8px 0;
+            font-weight: 400;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--color-white);
+            transition: var(--transition-premium);
+        }
+
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        /* Типографика контента */
+        .section-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.4rem;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-family: var(--font-luxury);
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.15;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            letter-spacing: 0.2rem;
+        }
+
+        /* Кутюрные кнопки */
+        .btn-luxury {
+            display: inline-block;
+            padding: 20px 50px;
+            border: 1px solid var(--color-white);
+            font-size: 0.75rem;
+            letter-spacing: 0.3rem;
+            text-transform: uppercase;
+            color: var(--color-white);
+            background: transparent;
+            transition: var(--transition-premium);
+            position: relative;
+            font-weight: 400;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn-luxury:hover {
+            background-color: var(--color-white);
+            color: var(--color-black);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+        }
+
+        .luxury-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .mobile-scroll-tabs {
+            display: none;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 0 20px 0;
+            margin-bottom: 30px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-tab-item {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-card-bg);
+            border: 1px solid var(--color-border);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.2rem;
+            margin-right: 15px;
+            transition: var(--transition-premium);
+        }
+
+        .mobile-tab-item.active {
+            background: var(--color-white);
+            color: var(--color-black);
+            border-color: var(--color-white);
+        }
+
+        /* 100% СТАБИЛЬНЫЙ МАТОВЫЙ КОНТЕЙНЕР ДЛЯ ТВОЕЙ КАРТЫ */
+        .luxury-map-wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+        }
+
+        /* Безопасное селективное затемнение карты в благородный монохром */
+        .luxury-map-wrapper iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: 0 !important;
+            filter: grayscale(1) brightness(0.4) contrast(1.2);
+        }
+
+        /* Темная вуаль для мягкого слияния фрейма с дизайном сайта */
+        .luxury-map-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.45);
+            mix-blend-mode: color-burn;
+            pointer-events: none;
+        }
+        /* СТИЛИЗАЦИЯ ИНПУТОВ ПРЕМИАЛЬНОЙ ФОРМЫ ЗАПИСИ */
+        .luxury-form-group {
+            position: relative;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .luxury-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: #111111;
+            border: 1px solid var(--color-border);
+            color: var(--color-white);
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            letter-spacing: 0.05rem;
+            transition: var(--transition-premium);
+        }
+
+        .luxury-input:focus {
+            border-color: var(--color-white);
+            background: #151515;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.03);
+        }
+
+        select.luxury-input {
+            appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%238E8E93'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px;
+        }
+
+        .luxury-input[type="date"],
+        .luxury-input[type="time"] {
+            color-scheme: dark;
+        }
+
+        /* Оверлей-модалка */
+        .luxury-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(15px); z-index: 999999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .luxury-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-body { background: var(--color-card-bg); border: 1px solid var(--color-border); padding: 50px; max-width: 600px; width: 95%; max-height: 90vh; overflow-y: auto; position: relative; transform: translateY(30px); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .luxury-modal.active .modal-body { transform: translateY(0); }
+        .modal-close-trigger { position: absolute; top: 25px; right: 25px; font-size: 1.5rem; cursor: pointer; color: var(--color-muted); transition: var(--transition-premium); }
+        .modal-close-trigger:hover { color: var(--color-white); transform: rotate(90deg); }
+
+        /* ВЕЕРНАЯ МУЛЬТИ-КНОПКА СВЯЗИ */
+        .multi-trigger { position: fixed; bottom: 40px; right: 40px; z-index: 2000; display: flex; flex-direction: column-reverse; align-items: center; gap: 15px; }
+        .main-pearl-btn { width: 75px; height: 75px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #ffffff 0%, #e0e0e0 40%, #aaaaaa 100%); box-shadow: 0 15px 35px rgba(255,255,255,0.15), inset 0 2px 6px rgba(255,255,255,0.6); display: flex; justify-content: center; align-items: center; border: none; }
+        .micro-buttons-wrapper { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; opacity: 0; pointer-events: none; transform: translateY(30px); transition: var(--transition-premium); }
+        .micro-buttons-wrapper.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .micro-btn { width: 52px; height: 52px; border-radius: 50%; background: #181818; border: 1px solid var(--color-border); display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: var(--transition-premium); }
+        .micro-btn:hover { transform: scale(1.1); background: var(--color-white); }
+        .micro-btn:hover svg { fill: #000000 !important; }
+
+        /* Базовые стили элементов */
+        .smart-gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .before-after-card { position: relative; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid var(--color-border); }
+        .ba-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .ba-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 30px; background: linear-gradient(to top, rgba(10,10,10,0.95), rgba(10,10,10,0)); transform: translateY(30px); opacity: 0; transition: var(--transition-premium); z-index: 5; }
+        .before-after-card:hover .ba-overlay { transform: translateY(0); opacity: 1; }
+        .before-after-card:hover .ba-image { transform: scale(1.05); }
+        .ba-image { width: 100%; height: 100%; object-fit: cover; transition: var(--transition-premium); }
+        @media (max-width: 1024px) { .luxury-grid { grid-template-columns: repeat(2, 1fr); } .smart-gallery-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .luxury-grid { display: none; } .mobile-scroll-tabs { display: flex; } .smart-gallery-container { grid-template-columns: 1fr; } .section-title { font-size: 2.5rem; } .responsive-layout-grid { grid-template-columns: 1fr !important; gap: 35px !important; } }
+           /* КУТЮРНЫЙ ФОНОВЫЙ ВИДЕО-ПЛЕЙБЕК */
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important; /* Намертво растягивает видео на весь экран */
+            z-index: 1 !important; /* Уводит видео на самый задний план */
+            filter: grayscale(0.2) contrast(1.1) brightness(0.5); /* Встроенный fashion-фильтр */
+        }
+
+        /* МОЩНЫЙ МНОГОСЛОЙНЫЙ МАТОВЫЙ ФИЛЬТР ЗАТЕМНЕНИЯ */
+        .hero-overlay-dark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            /* Накладываем глубокий черный градиент с затемнением к краям экрана */
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.4) 0%, rgba(10, 10, 10, 0.85) 100%),
+                        radial-gradient(circle at center, rgba(10, 10, 10, 0.2) 0%, #0A0A0A 85%);
+            z-index: 2 !important; /* Вуаль ложится СВЕРХУ на видео, приглушая его */
+        }
+
+        /* Выносим текстовый контент строго поверх видео и темной вуали */
+        .hero-content {
+            position: relative;
+            z-index: 3 !important; 
+            width: 100%;
+        }
+        /* ИСПРАВЛЕННЫЙ И РОСКОШНЫЙ БЛОК КНОПОК ФИЛЬТРАЦИИ */
+        .gallery-filter-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Защита от слипания на смартфонах */
+            gap: 15px; /* Большие сочные отступы между кнопками */
+            margin: 40px 0 60px 0 !important;
+            width: 100%;
+        }
+
+        /* КУТЮРНЫЕ КНОПКИ-ПЕРЕКЛЮЧАТЕЛИ С ПЛАТИНОВОЙ РАМКОЙ */
+        .filter-trigger {
+            font-family: var(--font-main);
+            font-size: 0.75rem !important;
+            font-weight: 400;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            padding: 14px 28px !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: var(--color-muted);
+            background: rgba(255, 255, 255, 0.01);
+            transition: var(--transition-premium);
+            cursor: pointer;
+        }
+
+        /* Эффект при наведении и для активной кнопки */
+        .filter-trigger:hover,
+        .filter-trigger.active {
+            border-color: var(--color-white) !important;
+            color: var(--color-white) !important;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+ </style>
+</head>
+<body>
+    <!-- ==========================================================================
+       6. СИСТЕМНЫЙ ПРЕМИАЛЬНЫЙ ПРЕЛОАДЕР (МАТОВЫЙ ЭКРАН)
+       ========================================================================== -->
+    <div id="preloader">
+        <div class="preloader-logo">CELEBRITY STUDIO</div>
+    </div>
+
+    <!-- ==========================================================================
+       7. СКВОЗНОЙ HEADER (ГЛЯНЦЕВАЯ НАВИГАЦИЯ С ЭФФЕКТОМ FOCUS/BLUR)
+       ========================================================================== -->
+    <header>
+        <div class="logo">CELEBRITY</div>
+        <nav>
+            <ul class="nav-menu" id="main-navigation">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-route="home">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#salon" class="nav-link" data-route="salon">Салон красоты</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#training" class="nav-link" data-route="training">Школа Training</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contacts" class="nav-link" data-route="contacts">Контакты</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ==========================================================================
+       8. СТРУКТУРА КОНТЕНТА САЙТА (ИЗОЛИРОВАННЫЙ SPA-РЕЖИМ БЕЗ НАСЛОЕНИЙ)
+       ========================================================================== -->
+    <main id="spa-content-root" style="padding-top: 100px;">
+
+        <!-- 8.1 СТРАНИЦА: ГЛАВНАЯ (ID: page-home) -->
+        <div class="page-container active" id="page-home">
+            
+            <!-- HERO СЕКЦИЯ С ПОЛНОЭКРАННЫМ HIGH-END ВИДЕО-ФОНОМ -->
+            <section class="hero" style="min-height: 90vh; display: flex; align-items: center; padding: 60px 5%; position: relative; overflow: hidden;">
+                <video class="hero-video-bg" autoplay loop muted playsinline src="https://static.vecteezy.com/system/resources/previews/038/901/658/watermarked/golden-background-of-bokeh-loop-animation-video.mp4"></video>
+                <div class="hero-overlay-dark"></div>
+                
+                <div class="hero-content" style="max-width: 900px; position: relative; z-index: 3;">
+                    <p class="section-tag reveal-element">High-End Beauty Space</p>
+                    <h1 class="section-title reveal-element" style="font-size: 5.5rem; margin-bottom: 20px; line-height: 1.05;">
+                        CELEBRITY STUDIO
+                    </h1>
+                    <p class="reveal-element" style="font-size: 1.2rem; color: var(--color-muted); margin-bottom: 5px; letter-spacing: 0.15rem; text-transform: uppercase;">
+                        Beauty Space & Accredited Training School
+                    </p>
+                    <p class="reveal-element" style="font-size: 1.05rem; color: var(--color-gold); margin-bottom: 45px; letter-spacing: 0.25rem; text-transform: uppercase;">
+                        Ярославль • Исторический центр
+                    </p>
+                    <div class="reveal-element">
+                        <a href="#salon" class="btn-luxury shine-card route-trigger" data-route="salon">
+                            Исследовать сервисы
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <!-- БЛОК: УТП И ОФФЕР-ПОДАРКИ ДЛЯ НОВЫХ КЛИЕНТОВ -->
+            <section style="background: var(--color-dark-gray); padding: 120px 5%; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+                <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center;" class="responsive-layout-grid">
+                    <div class="reveal-element">
+                        <p class="section-tag">Welcome Privilege</p>
+                        <h2 class="section-title" style="font-size: 3.2rem; margin-bottom: 25px;">
+                            Ваш первый шаг <br>к аутентичной роскоши
+                        </h2>
+                        <p style="color: var(--color-muted); margin-bottom: 40px; font-size: 1.05rem; font-weight: 200; line-height: 1.8;">
+                            Мы ценим ваш выбор премиального качества. Каждому новому гостю нашего пространства мы дарим эксклюзивный купон на первое посещение со скидкой 1000 рублей на любую комплексную услугу макияжа или сложного салонного ухода при бронировании.
+                        </p>
+                        <a href="#salon" class="btn-luxury shine-card route-trigger" data-route="salon" style="border-color: var(--color-gold); color: var(--color-gold);">
+                            Активировать оффер (-1000₽)
+                        </a>
+                    </div>
+                    <div class="reveal-element shine-card" style="height: 480px; background: #161616; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.03);">
+                        <div style="text-align: center; padding: 40px;">
+                            <span style="font-family: var(--font-luxury); font-size: 7rem; line-height: 1; color: rgba(212,175,55,0.12); display: block; margin-bottom: 15px; font-weight: 300;">1000₽</span>
+                            <p style="text-transform: uppercase; letter-spacing: 0.35rem; font-size: 0.8rem; color: var(--color-white);">Максимальный All-Inclusive пакет</p>
+                            <p style="font-size: 0.75rem; color: var(--color-muted); margin-top: 10px; letter-spacing: 0.1rem;">Действительно при бронировании через сайт</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- БЛОК: ИНТЕРАКТИВНАЯ SMART-ГАЛЕРЕЯ С ФИЛЬТРАЦИЕЙ -->
+            <section style="padding: 140px 5%;">
+                <div style="text-align: center; margin-bottom: 70px;">
+                    <p class="section-tag">Digital Glossy Portfolio</p>
+                    <h2 class="section-title">Искусство преображения</h2>
+                    <p style="color: var(--color-muted); max-width: 600px; margin: -20px auto 0 auto; font-size: 1rem; font-weight: 300;">
+                        Нажмите на кутюрную категорию ниже, чтобы мгновенно отфильтровать и увидеть безупречные результаты трансформации образов от наших топ-мастеров.
+                    </p>
+                </div>
+
+                <!-- Фильтры категорий портфолио -->
+                <div class="gallery-filter-bar reveal-element">
+                    <button class="filter-trigger active" data-filter="all">Все работы</button>
+                    <button class="filter-trigger" data-filter="makeup">Макияж</button>
+                    <button class="filter-trigger" data-filter="brows">Брови</button>
+                    <button class="filter-trigger" data-filter="hair">Волосы</button>
+                </div>
+
+                <!-- Контейнер карточек галереи -->
+                <div class="smart-gallery-container reveal-element" id="portfolio-gallery-root">
+                    
+                    <!-- Карточка 1: Макияж -->
+               <div class="before-after-card mix-target shine-card" data-category="makeup">
+    <div class="ba-wrapper">
+        <img class="ba-image" src="https://s6.iimage.su/s/04/gh6U2N9xsO9VejF67yctmt3jCsk1fLkGCdJbtcUgI.png" alt="Couture Makeup"> <!-- ЭТО ВСТАВЛЯЕМ -->
+    </div>
+    <div class="ba-overlay">
+        <h5 style="font-family: var(--font-luxury); font-size: 1.4rem; letter-spacing: 0.1rem; margin-bottom: 5px;">Couture Smokey Eyes</h5>
+        <p style="font-size: 0.75rem; color: var(--color-gold); letter-spacing: 0.1rem; text-transform: uppercase;">Вечерний премиум образ</p>
+    </div>
+</div>
+                    <!-- Карточка 2: Брови -->
+                    <div class="before-after-card mix-target shine-card" data-category="brows">
+    <div class="ba-wrapper">
+        <img class="ba-image" src="https://s6.iimage.su/s/04/gmdGyl0x28OyJkcIJXniFU9pKqwrCUkRKmD6CvIaa.png" alt="Couture Makeup"> <!-- ЭТО ВСТАВЛЯЕМ -->
+    </div>
+    <div class="ba-overlay">
+        <h5 style="font-family: var(--font-luxury); font-size: 1.4rem; letter-spacing: 0.1rem; margin-bottom: 5px;">Brow Архитектура</h5>
+        <p style="font-size: 0.75rem; color: var(--color-gold); letter-spacing: 0.1rem; text-transform: uppercase;">Моделирование & Окрашивание Lycon</p>
+    </div>
+</div>
+                    <!-- Карточка 3: Волосы -->
+                   <div class="before-after-card mix-target shine-card" data-category="hair">
+    <div class="ba-wrapper">
+        <img class="ba-image" src="https://s6.iimage.su/s/04/gStFoUKxOFkmBvrtMPsgaWkCghIEe0tzwNQ0EFZ1X.png" alt="Couture Makeup"> <!-- ЭТО ВСТАВЛЯЕМ -->
+    </div>
+    <div class="ba-overlay">
+        <h5 style="font-family: var(--font-luxury); font-size: 1.4rem; letter-spacing: 0.1rem; margin-bottom: 5px;">Airtouch Supreme</h5>
+        <p style="font-size: 0.75rem; color: var(--color-gold); letter-spacing: 0.1rem; text-transform: uppercase;">Сложное многогранное окрашивание</p>
+    </div>
+</div>
+                    <!-- Карточка 4: Макияж -->
+                  <div class="before-after-card mix-target shine-card" data-category="makeup">
+    <div class="ba-wrapper">
+        <img class="ba-image" src="https://s6.iimage.su/s/04/gcsPSx0xPw2zVrUt9DzFMQnehFmkcrCJHTV4A1QGn.png" alt="Couture Makeup"> <!-- ЭТО ВСТАВЛЯЕМ -->
+    </div>
+    <div class="ba-overlay">
+        <h5 style="font-family: var(--font-luxury); font-size: 1.4rem; letter-spacing: 0.1rem; margin-bottom: 5px;">Hollywood Nude Skin</h5>
+        <p style="font-size: 0.75rem; color: var(--color-gold); letter-spacing: 0.1rem; text-transform: uppercase;">Эстетический дневной макияж</p>
+    </div>
+</div>
+
+                    <!-- Карточка 5: Волосы -->
+                  <div class="before-after-card mix-target shine-card" data-category="hair">
+    <div class="ba-wrapper">
+        <img class="ba-image" src="https://s6.iimage.su/s/04/g5K5TfVxyzYLnn5yTLL3Eussdirybcg3fUB8lrjzn.png" alt="Couture Makeup"> <!-- ЭТО ВСТАВЛЯЕМ -->
+    </div>
+    <div class="ba-overlay">
+        <h5 style="font-family: var(--font-luxury); font-size: 1.4rem; letter-spacing: 0.1rem; margin-bottom: 5px;">Подиумные локоны</h5>
+        <p style="font-size: 0.75rem; color: var(--color-gold); letter-spacing: 0.1rem; text-transform: uppercase;">Текстурная вечерняя укладка</p>
+    </div>
+</div>
+                    <!-- Карточка 6: Брови -->
+                    <div class="before-after-card mix-target shine-card" data-category="brows">
+    <div class="ba-wrapper">
+        <img class="ba-image" src="https://s6.iimage.su/s/04/gvJbv2ix3j8aUvOY5OPdo1bH4ANpC91mSEYQaKhzJ.png" alt="Couture Makeup"> <!-- ЭТО ВСТАВЛЯЕМ -->
+    </div>
+    <div class="ba-overlay">
+        <h5 style="font-family: var(--font-luxury); font-size: 1.4rem; letter-spacing: 0.1rem; margin-bottom: 5px;">Долговременная укладка</h5>
+        <p style="font-size: 0.75rem; color: var(--color-gold); letter-spacing: 0.1rem; text-transform: uppercase;">Комплексное ламинирование & Ботокс</p>
+    </div>
+</div>
+                </div>
+            </section>
+
+            <!-- БЛОК: ЭКСПРЕСС-КАРТА НА ГЛАВНОЙ С ТВОЕЙ ОРИГИНАЛЬНОЙ ССЫЛКОЙ ЯНДЕКСА -->
+            <section style="padding: 60px 5% 140px 5%; background: linear-gradient(to bottom, var(--color-black), #050505);">
+                <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; align-items: center;" class="responsive-layout-grid">
+                    <div class="reveal-element">
+                        <p class="section-tag">Express Location</p>
+                        <h2 class="section-title" style="font-size: 2.8rem; margin-bottom: 20px;">Где мы находимся</h2>
+                        <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 15px;">Ярославль, ул. Кедрова, 3/8</p>
+                        <p style="color: var(--color-muted); font-size: 0.9rem; line-height: 1.8;">
+                            Удобное расположение в 4-х минутах неторопливой ходьбы от Красной площади. Возле здания расположена просторная городская парковочная зона для вашего автомобиля.
+                        </p>
+                    </div>
+                    <div class="reveal-element">
+                        <div class="luxury-map-wrapper" style="height: 380px;">
+                            <div style="position:relative;overflow:hidden;width:100%;height:100%;">
+                            <a href="https://yandex.com/maps/org/studio_celebrity/165256171430/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;opacity:0;">Studio Celebrity</a>
+                            <a href="https://yandex.com/maps/16/yaroslavl/category/beauty_salon/184105814/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;opacity:0;">Салон красоты в Ярославле</a>
+                            <a href="https://yandex.com/maps/16/yaroslavl/category/eyebrow_and_eyelash_salon/7407769291/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:28px;opacity:0;">Салон бровей и ресниц в Ярославле</a>
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=39.893608%2C57.629982&mode=search&oid=165256171430&ol=biz&sctx=ZAAAAAgBEAAaKAoSCfFmDd5XtSVAEXmxMEROl0hAEhIJAAAAAADDXkARzH7d6c4nSEAiBgABAgMEBSgKOABAuZ8NSAFqAnJ1nQHNzMw9oAEAqAEAvQGHtfFVwgEGpp%2Bk0OcEggIjQ0VMRUJSSVRZIFNUVURJTyDRj9GA0L7RgdC70LDQstC70YyKAgCSAgIxNpoCDGRlc2t0b3AtbWFwcw%3D%3D&sll=39.893608%2C57.629982&sspn=0.007510%2C0.002397&text=CELEBRITY%20STUDIO%20%D1%8F%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2%D0%BB%D1%8C&z=18" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>                       
+                        </div>
+                    </div>
+                </div>
+ 	      </div>
+            </section>
+        </div> <!-- ЖЕСТКОЕ И ГЕРМЕТИЧНОЕ ЗАКРЫТИЕ ГЛАВНОЙ СТРАНИЦЫ -->
+        <!-- 8.2 СТРАНИЦА: САЛОН КРАСОТЫ (ID: page-salon) -->
+        <div class="page-container" id="page-salon">
+            <section style="padding: 60px 5% 40px 5%;">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <p class="section-tag">Premium Service Menu</p>
+                    <h2 class="section-title">Салон красоты</h2>
+                    <p style="color: var(--color-muted); max-width: 600px; margin: -20px auto 0 auto; font-size: 1rem;">
+                        Услуги экспертного уровня. Индивидуальный кутюрный подход к созданию вашего безупречного образа.
+                    </p>
+                </div>
+
+                <!-- Мобильные вкладки для скролла прайса на смартфонах -->
+                <div class="mobile-scroll-tabs" id="salon-mobile-tabs">
+                    <div class="mobile-tab-item active" data-tab-target="makeup-grid">Make-Up</div>
+                    <div class="mobile-tab-item" data-tab-target="brows-grid">Brows</div>
+                    <div class="mobile-tab-item" data-tab-target="hair-grid">Hair</div>
+                </div>
+
+                <!-- КАТЕГОРИЯ: MAKE-UP -->
+                <div style="margin-bottom: 90px;" id="makeup-grid-wrapper" class="reveal-element">
+                    <p class="section-tag" style="text-align: center; margin-bottom: 35px; color: var(--color-white); font-size: 1rem; letter-spacing: 0.5rem;">MAKE-UP</p>
+                    <div class="luxury-grid active-mobile-view" id="makeup-grid">
+                        
+                        <!-- Карточка 1 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Дневной макияж (Nude Look)</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">3 000 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Легкий эстетический макияж, бережно подчеркивающий вашу естественную красоту и благородное сияние кожи без эффекта плотности маски.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                        <!-- Карточка 2 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Вечерний макияж (Evening Glam)</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">4 500 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Выразительный, ультрастойкий макияж для особых выходов, знаковых фотосессий и светских мероприятий любой степени сложности.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                        <!-- Карточка 3 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Свадебный макияж (Bridal Luxury)</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">6 000 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Эксклюзивный образ невесты. Повышенная стойкость люкс-материалов, тщательная проработка зоны декольте и подготовительный спа-ритуал.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- КАТЕГОРИЯ: BROWS -->
+                <div style="margin-bottom: 90px;" id="brows-grid-wrapper" class="reveal-element">
+                    <p class="section-tag" style="text-align: center; margin-bottom: 35px; color: var(--color-white); font-size: 1rem; letter-spacing: 0.5rem;">BROWS</p>
+                    <div class="luxury-grid" id="brows-grid">
+                        
+                        <!-- Карточка 1 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Архитектура бровей</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">1 800 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Построение гармоничной формы по золотому сечению лица, деликатная коррекция (пинцет/премиум-воск Lycon) и стойкое окрашивание бровей.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                        <!-- Карточка 2 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Долговременная укладка</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">2 500 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Ламинирование непослушных волосков мягкими составами класса люкс, надежная фиксация формы, глубокое питание кератином и уход.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                        <!-- Карточка 3 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Комплекс «Все включено»</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">3 500 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Максимальный уход: деликатное очищение, архитектурное моделирование, премиальное окрашивание, ламинирование и ботокс-реконструкция.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- КАТЕГОРИЯ: HAIR -->
+                <div style="margin-bottom: 40px;" id="hair-grid-wrapper" class="reveal-element">
+                    <p class="section-tag" style="text-align: center; margin-bottom: 35px; color: var(--color-white); font-size: 1rem; letter-spacing: 0.5rem;">HAIR</p>
+                    <div class="luxury-grid" id="hair-grid">
+                        
+                        <!-- Карточка 1 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Стрижка & Укладка Supreme</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">3 500 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Авторские концептуальные стрижки по технике точных геометрических линий. Включает мытье головы селективным уходом и укладку.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                        <!-- Карточка 2 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Сложное окрашивание (Airtouch)</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">12 000 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Высокоточная технология деликатного рассветления прядей воздушным потоком. Бесшовные многогранные переходы и защита структуры.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                        <!-- Карточка 3 -->
+                        <div class="shine-card" style="padding: 40px; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                            <div>
+                                <h4 style="font-family: var(--font-luxury); font-size: 1.7rem; letter-spacing: 0.1rem; margin-bottom: 10px; font-weight: 300;">Молекулярное восстановление</h4>
+                                <div style="font-size: 1.4rem; font-weight: 400; color: var(--color-gold); margin-bottom: 20px;">5 000 ₽</div>
+                                <p style="font-size: 0.85rem; color: var(--color-muted); line-height: 1.8; font-weight: 300;">Глубокая спа-реконструкция разорванных дисульфидных связей кортекса волоса люкс-сыворотками. Зеркальный, глянцевый блеск.</p>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: 100%;">Запись на сервис</button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div> <!-- ЖЕСТКОЕ И ГЕРМЕТИЧНОЕ ЗАКРЫТИЕ СТРАНИЦЫ САЛОНА КРАСОТЫ -->
+        <!-- 8.3 СТРАНИЦА: БЬЮТИ-ШКОЛА TRAINING (ID: page-training) -->
+        <div class="page-container" id="page-training">
+            <section style="padding: 60px 5% 40px 5%;">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <p class="section-tag">Accredited Academy</p>
+                    <h2 class="section-title">Бьюти-Школа Training</h2>
+                    <p style="color: var(--color-muted); max-width: 600px; margin: -20px auto 0 auto; font-size: 1rem;">
+                        Профессиональные авторские курсы бьюти-индустрии. Получение официального диплома и сильного продающего портфолио.
+                    </p>
+                </div>
+
+                <!-- Мобильные вкладки для скролла курсов на смартфонах -->
+                <div class="mobile-scroll-tabs" id="training-mobile-tabs">
+                    <div class="mobile-tab-item active" data-tab-target="course-self-wrapper">Для себя</div>
+                    <div class="mobile-tab-item" data-tab-target="course-pro-wrapper">Базовый Pro</div>
+                    <div class="mobile-tab-item" data-tab-target="course-up-wrapper">Повышение</div>
+                </div>
+
+                <!-- КУРС 1: МАКИЯЖ ДЛЯ СЕБЯ -->
+                <div style="margin-bottom: 60px;" id="course-self-wrapper" class="active-mobile-view reveal-element">
+                    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; background: var(--color-card-bg); border: 1px solid var(--color-border); padding: 50px;" class="responsive-layout-grid">
+                        <div style="height: 380px; background: #1F1F1F; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.02);" class="shine-card">
+                            <span style="font-family: var(--font-luxury); font-size: 1.8rem; color: var(--color-muted); letter-spacing: 0.2rem; text-transform: uppercase; text-align: center; padding: 20px;">FOR MYSELF <br><span style="font-size: 1rem; color: var(--color-gold);">PERSONAL</span></span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <span class="section-tag" style="margin-bottom: 10px; display: inline-block;">Индивидуальный формат</span>
+                                <h3 style="font-family: var(--font-luxury); font-size: 2.4rem; letter-spacing: 0.1rem; margin-bottom: 20px; font-weight: 300;">Курс «Макияж для себя»</h3>
+                                <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.8; font-weight: 300;">
+                                    Полный аудит вашей личной косметички, individual подбор продуктов под тип кожи, цветовой анализ и постановка руки. Научитесь за 2 дня трансформировать легкий дневной нюд в роскошный голливудский вечерний образ.
+                                </p>
+                                <div style="display: flex; gap: 40px; margin-bottom: 30px;">
+                                    <div>
+                                        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-muted); display: block; letter-spacing: 0.1rem;">Длительность</span>
+                                        <span style="font-family: var(--font-luxury); font-size: 1.4rem;">2 занятия (12 часов)</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-muted); display: block; letter-spacing: 0.1rem;">Стоимость</span>
+                                        <span style="font-family: var(--font-luxury); font-size: 1.4rem; color: var(--color-gold);">8 500 ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: fit-content;">Забронировать место</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- КУРС 2: БАЗОВОЕ ОБУЧЕНИЕ ВИЗАЖИСТОВ / БРОВИСТОВ -->
+                <div style="margin-bottom: 60px;" id="course-pro-wrapper" class="reveal-element">
+                    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; background: var(--color-card-bg); border: 1px solid var(--color-border); padding: 50px;" class="responsive-layout-grid">
+                        <div style="height: 380px; background: #161616; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.02);" class="shine-card">
+                            <span style="font-family: var(--font-luxury); font-size: 1.8rem; color: var(--color-muted); letter-spacing: 0.2rem; text-transform: uppercase; text-align: center; padding: 20px;">PROFESSIONAL <br><span style="font-size: 1rem; color: var(--color-gold);">BASIC START</span></span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <span class="section-tag" style="margin-bottom: 10px; display: inline-block;">Профессия с нуля</span>
+                                <h3 style="font-family: var(--font-luxury); font-size: 2.4rem; letter-spacing: 0.1rem; margin-bottom: 20px; font-weight: 300;">Базовый курс «Makeup Artist Pro»</h3>
+                                <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.8; font-weight: 300;">
+                                    Фундаментальный старт в карьере визажиста. 8 самых востребованных коммерческих техник, глубокий авторский блок по колористике, психологии взаимодействия с премиум-клиентами и продвижению личного бренда.
+                                </p>
+                                <div style="display: flex; gap: 40px; margin-bottom: 30px;">
+                                    <div>
+                                        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-muted); display: block; letter-spacing: 0.1rem;">Длительность</span>
+                                        <span style="font-family: var(--font-luxury); font-size: 1.4rem;">7 дней (45 часов)</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-muted); display: block; letter-spacing: 0.1rem;">Стоимость</span>
+                                        <span style="font-family: var(--font-luxury); font-size: 1.4rem; color: var(--color-gold);">25 000 ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: fit-content;">Забронировать место</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КУРС 3: ПОВЫШЕНИЕ КВАЛИФИКАЦИИ -->
+                <div style="margin-bottom: 40px;" id="course-up-wrapper" class="reveal-element">
+                    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; background: var(--color-card-bg); border: 1px solid var(--color-border); padding: 50px;" class="responsive-layout-grid">
+                        <div style="height: 380px; background: #1B1B1B; display: flex; justify-content: center; align-items: center; border: 1px solid rgba(255,255,255,0.02);" class="shine-card">
+                            <span style="font-family: var(--font-luxury); font-size: 1.8rem; color: var(--color-muted); letter-spacing: 0.2rem; text-transform: uppercase; text-align: center; padding: 20px;">ADVANCED <br><span style="font-size: 1rem; color: var(--color-gold);">UPGRADE EXPERT</span></span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <span class="section-tag" style="margin-bottom: 10px; display: inline-block;">Повышение мастеров</span>
+                                <h3 style="font-family: var(--font-luxury); font-size: 2.4rem; letter-spacing: 0.1rem; margin-bottom: 20px; font-weight: 300;">Повышение «Couture & Speed Tech»</h3>
+                                <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.8; font-weight: 300;">
+                                    Интенсивный апгрейд для практикующих бьюти-мастеров. Избавление от грязных пятен в тушевке, сведение времени работы до 40 минут без потери качества, адаптация сложных инстаграмных текстур в чистые салонные образы.
+                                </p>
+                                <div style="display: flex; gap: 40px; margin-bottom: 30px;">
+                                    <div>
+                                        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-muted); display: block; letter-spacing: 0.1rem;">Длительность</span>
+                                        <span style="font-family: var(--font-luxury); font-size: 1.4rem;">3 дня (24 часа)</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--color-muted); display: block; letter-spacing: 0.1rem;">Стоимость</span>
+                                        <span style="font-family: var(--font-luxury); font-size: 1.4rem; color: var(--color-gold);">15 000 ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-luxury shine-card scroll-lock-order" style="width: fit-content;">Забронировать место</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div> <!-- ЖЕСТКОЕ И ГЕРМЕТИЧНОЕ ЗАКРЫТИЕ СТРАНИЦЫ ШКОЛЫ -->
+        <!-- 8.4 СТРАНИЦА: КОНТАКТЫ И СЕРВИС (ID: page-contacts) -->
+        <div class="page-container" id="page-contacts">
+            <section style="padding: 60px 5% 120px 5%;">
+                <div style="text-align: center; margin-bottom: 80px;">
+                    <p class="section-tag">Contacts & High-End Service</p>
+                    <h2 class="section-title">Контакты и Сервис</h2>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: flex-start;" class="responsive-layout-grid">
+                    <div class="reveal-element">
+                        <div style="margin-bottom: 45px;">
+                            <p class="section-tag" style="margin-bottom: 5px;">Локация пространства</p>
+                            <h4 style="font-family: var(--font-luxury); font-size: 1.8rem; margin-bottom: 10px; font-weight: 300;">г. Ярославль, ул. Кедрова, 3/8</h4>
+                            <p style="color: var(--color-muted); font-size: 0.95rem; line-height: 1.7; font-weight: 300;">
+                                Мы находимся в самом центре культурно-исторического Ярославля, всего в 4 минутах пешком от Красной площади. Рядом со входом расположена удобная городская парковочная зона.
+                            </p>
+                        </div>
+                        <div style="margin-bottom: 45px;">
+                            <p class="section-tag" style="margin-bottom: 5px;">Graphic работы</p>
+                            <h4 style="font-family: var(--font-luxury); font-size: 1.8rem; margin-bottom: 10px; font-weight: 300;">Ежедневно с 10:00 до 20:00</h4>
+                            <p style="color: var(--color-muted); font-size: 0.95rem; font-weight: 300;">Прием осуществляется по предварительной записи во избежание очередей.</p>
+                        </div>
+                        <div>
+                            <p class="section-tag" style="margin-bottom: 5px;">Стандарты сервиса 5★</p>
+                            <h4 style="font-family: var(--font-luxury); font-size: 1.8rem; margin-bottom: 10px; font-weight: 300;">Кофе с собой & Стерильность</h4>
+                            <p style="color: var(--color-muted); font-size: 0.95rem; line-height: 1.7; font-weight: 300;">
+                                Инструменты проходят 3-ступенчатую медицинскую дезинфекцию и стерилизацию в сухожаровом шкафу. Каждому гостю предлагается авторская кофейная карта (включая матчу) бесплатно с собой.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="reveal-element">
+                        <!-- ВШИТА ТВОЯ КАРТА ДЛЯ СТРАНИЦЫ КОНТАКТОВ С ВЫСОТОЙ 520PX -->
+                        <div class="luxury-map-wrapper" style="height: 520px;">
+                            <div style="position:relative;overflow:hidden;width:100%;height:100%;">
+                                <a href="https://yandex.com/maps/org/studio_celebrity/165256171430/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;opacity:0;">Studio Celebrity</a>
+                            <a href="https://yandex.com/maps/16/yaroslavl/category/beauty_salon/184105814/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;opacity:0;">Салон красоты в Ярославле</a>
+                            <a href="https://yandex.com/maps/16/yaroslavl/category/eyebrow_and_eyelash_salon/7407769291/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:28px;opacity:0;">Салон бровей и ресниц в Ярославле</a>
+                            <iframe src="https://yandex.com/map-widget/v1/?ll=39.893608%2C57.629982&mode=search&oid=165256171430&ol=biz&sctx=ZAAAAAgBEAAaKAoSCfFmDd5XtSVAEXmxMEROl0hAEhIJAAAAAADDXkARzH7d6c4nSEAiBgABAgMEBSgKOABAuZ8NSAFqAnJ1nQHNzMw9oAEAqAEAvQGHtfFVwgEGpp%2Bk0OcEggIjQ0VMRUJSSVRZIFNUVURJTyDRj9GA0L7RgdC70LDQstC70YyKAgCSAgIxNpoCDGRlc2t0b3AtbWFwcw%3D%3D&sll=39.893608%2C57.629982&sspn=0.007510%2C0.002397&text=CELEBRITY%20STUDIO%20%D1%8F%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2%D0%BB%D1%8C&z=18" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>                       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div> <!-- ЖЕСТКОЕ И ГЕРМЕТИЧНОЕ ЗАКРЫТИЕ СТРАНИЦЫ КОНТАКТОВ -->
+
+    </main>
+
+    <!-- СКВОЗНОЙ FOOTER ПОДВАЛ -->
+    <footer style="border-top: 1px solid var(--color-border); background-color: #050505; position: relative; z-index: 10;">
+        <div style="max-width: 1600px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 30px 5%;" class="responsive-layout-grid">
+            <div class="logo" style="font-size: 1.2rem;">CELEBRITY STUDIO</div>
+            <div style="font-size: 0.75rem; color: var(--color-muted); letter-spacing: 0.1rem; text-transform: uppercase;">
+                &copy; 2026. ВСЕ ПРАВА ЗАЩИЩЕНЫ. HIGH-END LUXURY DIGITAL GLOSSY JOURNAL.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+       10. РОСКОШНОЕ МОДАЛЬНОЕ ОКНО ОНЛАЙН-БРОНИРОВАНИЯ С ПОЛНОЙ ФОРМОЙ ЗАПИСИ
+       ========================================================================== -->
+    <div class="luxury-modal" id="booking-modal-root">
+        <div class="modal-body">
+            <div class="modal-close-trigger" id="modal-close-btn">&times;</div>
+            <p class="section-tag" style="margin-bottom: 10px;">Concierge Service</p>
+            <h3 style="font-family: var(--font-luxury); font-size: 2.2rem; letter-spacing: 0.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: 300;">
+                Онлайн-запись
+            </h3>
+            
+            <!-- Кутюрная форма записи -->
+            <form id="luxury-booking-form" onsubmit="event.preventDefault(); alert('Ваша премиум-заявка успешно отправлена. Администратор свяжется с вами в течение 5 минут.'); document.getElementById('booking-modal-root').classList.remove('active');">
+                <div class="luxury-form-group">
+                    <input type="text" class="luxury-input" placeholder="ВАШЕ ИМЯ" required>
+                </div>
+                <div class="luxury-form-group">
+                    <input type="tel" class="luxury-input" placeholder="НОМЕР ТЕЛЕФОНА" required>
+                </div>
+                <div class="luxury-form-group">
+                    <select class="luxury-input" required>
+                        <option value="" disabled selected hidden>ВЫБЕРИТЕ НАПРАВЛЕНИЕ</option>
+                        <option value="makeup">Макияж и образы (Салон)</option>
+                        <option value="brows">Архитектура и укладка бровей (Салон)</option>
+                        <option value="hair">Стрижки, окрашивания, уходы (Салон)</option>
+                        <option value="school-self">Курс «Макияж для себя» (Школа)</option>
+                        <option value="school-pro">Базовый курс «Makeup Artist Pro» (Школа)</option>
+                        <option value="school-up">Повышение квалификации визажистов (Школа)</option>
+                    </select>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="luxury-form-group">
+                        <input type="date" class="luxury-input" required>
+                    </div>
+                    <div class="luxury-form-group">
+                        <input type="time" class="luxury-input" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-luxury shine-card" style="width: 100%; margin-bottom: 25px; background: var(--color-white); color: var(--color-black);">Подтвердить запись</button>
+            </form>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 0.75rem; color: var(--color-muted); letter-spacing: 0.1rem; text-transform: uppercase;">— ИЛИ АЛЬТЕРНАТИВНЫЕ ВАРИАНТЫ —</p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a href="https://vk.cc" target="_blank" rel="noopener" class="btn-luxury shine-card" style="display: block; width: 100%; border-color: var(--color-gold); color: var(--color-gold); padding: 14px;">
+                    Выбрать мастера на DIKIDI ONLINE
+                </a>
+                <a href="tel:+79023333319" class="btn-luxury shine-card" style="display: block; width: 100%; border-color: rgba(255,255,255,0.15); padding: 14px; font-size: 0.7rem;">
+                    Позвонить на рецепцию
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- МУЛЬТИ-КНОПКА СВЯЗИ «ЗАПИСЬ» -->
+    <div class="multi-trigger" id="luxury-speed-dial">
+        <button class="main-pearl-btn" id="dial-main-trigger" aria-label="Открыть контакты">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="#000000" id="dial-icon-svg" style="transition: var(--transition-premium);"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </button>
+        <div class="micro-buttons-wrapper" id="dial-buttons-container">
+            <a href="https://vk.me" target="_blank" rel="noopener" class="micro-btn" title="Написать в VK">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M15.012 1h-6.024c-4.962 0-7.988 3.026-7.988 7.988v6.024c0 4.962 3.026 7.988 7.988 7.988h6.024c4.962 0 7.988-3.026 7.988-7.988v-6.024c0-4.962-3.026-7.988-7.988-7.988zm3.626 12.164h-1.04c-.378 0-.909-.271-1.579-.942-.58-.553-.996-.867-1.25-.942-.358-.116-.484-.047-.648.116-.251.272-.346.757-.346 1.393 0 .428-.115.696-.693.696-1.921 0-3.957-.962-5.321-2.906-1.531-2.144-1.99-4.238-1.99-4.57 0-.251.104-.486.581-.486h1.043c.394 0 .546.104.649.382.522 1.482 1.286 2.825 1.944 3.66.241.312.441.44.59.44.209 0 .302-.128.302-.51v-2.072c-.046-.995-.626-1.077-.626-1.424 0-.162.139-.324.417-.324h1.644c.347 0 .463.174.463.555v2.802c0 .301.127.406.243.406.185 0 .348-.105.696-.452.846-.984 1.436-2.454 1.436-2.756 0-.209.104-.325.428-.325h1.053c.417 0 .522.116.429.475-.417 1.482-1.633 3.393-2.282 4.192-.254.301-.324.417-.115.637.162.162.706.683 1.343 1.424.695.81.996 1.412.637 1.412z"/></svg>
+            </a>
+            <a href="https://wa.me" target="_blank" rel="noopener" class="micro-btn" title="Написать в WhatsApp">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.454L0 24zm6.59-3.807c1.643.975 3.25 1.483 4.815 1.484 5.427 0 9.842-4.364 9.845-9.728.002-2.597-1.004-5.04-2.833-6.87-1.829-1.83-4.267-2.837-6.866-2.839-5.433 0-9.85 4.365-9.853 9.729-.001 1.698.463 3.308 1.34 4.743L1.936 21.68l4.711-1.487zm11.378-6.195c-.3-.149-1.773-.874-2.047-.973-.274-.1-.474-.149-.673.15-.199.299-.772.973-.947 1.172-.174.199-.349.224-.648.075-.3-.149-1.266-.466-2.41-1.486-.89-.794-1.49-1.775-1.665-2.074-.174-.299-.018-.46.131-.609.135-.134.3-.349.449-.523.149-.174.199-.349.299-.498.1-.2.05-.374-.025-.523-.075-.149-.673-1.62-.922-2.218-.242-.584-.488-.506-.673-.515-.174-.008-.373-.01-.573-.01-.199 0-.523.075-.797.374-.274.299-1.047 1.022-1.047 2.492 0 1.47 1.072 2.89 1.221 3.089.149.199 2.11 3.221 5.11 4.516.714.308 1.272.492 1.707.63.717.228 1.368.196 1.883.119.574-.085 1.773-.723 2.022-1.42.249-.697.249-1.295.174-1.42-.075-.125-.274-.199-.573-.349z"/></svg>
+            </a>
+            <a href="tel:+79023333319" class="micro-btn" title="Позвонить"><svg viewBox="0 0 24 24" width="22" height="22" fill="#FFFFFF"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 12.1 РАБОТА ПРЕМИАЛЬНОГО ПРЕЛОАДЕРА ---
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        triggerScrollReveal();
+                    }, 800);
+                }
+            }, 1500);
+
+
+            // --- 12.2 КЛИЕНТСКИЙ SPA РОУТИНГ С ПОЛНОЙ DOM-ИЗОЛЯЦИЕЙ ---
+            const navLinks = document.querySelectorAll('#main-navigation .nav-link, .route-trigger');
+
+            function switchPage(targetRoute) {
+                const targetPage = document.getElementById(`page-${targetRoute}`);
+                if (!targetPage) return;
+
+                const activePage = document.querySelector('.page-container.active');
+                
+                if (activePage) {
+                    activePage.style.opacity = '0';
+                    setTimeout(() => {
+                        activePage.classList.remove('active');
+                        
+                        targetPage.style.display = 'block';
+                        void targetPage.offsetWidth; // Force Reflow
+                        targetPage.style.opacity = '1';
+                        targetPage.classList.add('active');
+                        
+                        triggerScrollReveal();
+                        window.scrollTo({ top: 0, behavior: 'instant' });
+                    }, 400);
+                }
+                
+                document.querySelectorAll('#main-navigation .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-route') === targetRoute) link.classList.add('active');
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const route = this.getAttribute('data-route') || this.getAttribute('href').substring(1);
+                    switchPage(route);
+                });
+            });
+
+
+            // --- 12.3 КИНЕМАТОГРАФИЧНЫЙ СКРОЛЛ КОНТЕНТА (Scroll Reveal) ---
+            const revealElements = document.querySelectorAll('.reveal-element');
+
+            function triggerScrollReveal() {
+                const triggerBottom = window.innerHeight * 0.92;
+                revealElements.forEach(el => {
+                    const parentPage = el.closest('.page-container');
+                    if (parentPage && !parentPage.classList.contains('active')) return;
+
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < triggerBottom) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', triggerScrollReveal);
+            // --- 12.4 ИНТЕЛЛЕКТУАЛЬНАЯ ФИЛЬТРАЦИЯ ГАЛЕРЕИ ПОРТФОЛИО ---
+            const filterTriggers = document.querySelectorAll('.filter-trigger');
+            const galleryCards = document.querySelectorAll('#portfolio-gallery-root .mix-target');
+
+            filterTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    filterTriggers.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const categoryFilter = this.getAttribute('data-filter');
+
+                    galleryCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+
+                        if (categoryFilter === 'all' || cardCategory === categoryFilter) {
+                            card.style.display = 'block';
+                            void card.offsetWidth;
+                            card.style.opacity = '1';
+                            card.style.transform = 'scale(1)';
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'scale(0.9)';
+                            setTimeout(() => {
+                                if (card.style.opacity === '0') card.style.display = 'none';
+                            }, 500);
+                        }
+                    });
+                });
+            });
+
+
+            // --- 12.5 МОБИЛЬНАЯ ИНЖЕНЕРИЯ: СВЯЗЬ ВКЛАДОК И УМНЫЙ АВТОСКРОЛЛ ---
+            function setupMobileTabs(tabsContainerId, activeViewClass) {
+                const container = document.getElementById(tabsContainerId);
+                if (!container) return;
+
+                const tabItems = container.querySelectorAll('.mobile-tab-item');
+                
+                tabItems.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        tabItems.forEach(item => item.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const targetGridId = this.getAttribute('data-tab-target');
+                        
+                        if(tabsContainerId === 'salon-mobile-tabs') {
+                            document.querySelectorAll('#page-salon .luxury-grid').forEach(g => g.classList.remove(activeViewClass));
+                            document.getElementById(targetGridId).classList.add(activeViewClass);
+                        } else if(tabsContainerId === 'training-mobile-tabs') {
+                            document.querySelectorAll('#page-training > section > div:not(.mobile-scroll-tabs)').forEach(d => d.classList.remove(activeViewClass));
+                            document.getElementById(targetGridId).classList.add(activeViewClass);
+                        }
+
+                        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                });
+            }
+
+            setupMobileTabs('salon-mobile-tabs', 'active-mobile-view');
+            setupMobileTabs('training-mobile-tabs', 'active-mobile-view');
+
+
+            // --- 12.6 ЛЮКС-МОДАЛКА И АКТИВАЦИЯ КНОПОК ЗАПИСИ ---
+            const bookingModal = document.getElementById('booking-modal-root');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            function openBookingModal() { if (bookingModal) bookingModal.classList.add('active'); }
+            function closeBookingModal() { if (bookingModal) bookingModal.classList.remove('active'); }
+
+            if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeBookingModal);
+            if (bookingModal) bookingModal.addEventListener('click', (e) => { if (e.target === bookingModal) closeBookingModal(); });
+
+            function bindBookingButtons() {
+                document.querySelectorAll('.scroll-lock-order, .auto-scroll-trigger').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        openBookingModal();
+                    });
+                });
+            }
+            bindBookingButtons();
+
+
+            // --- 12.7 ВЕЕРНАЯ МУЛЬТИ-КНОПКА СВЯЗИ С ИСПРАВЛЕННОЙ ЛОГИКОЙ КЛИКА ---
+            const dialTrigger = document.getElementById('dial-main-trigger');
+            const buttonsContainer = document.getElementById('dial-buttons-container');
+            const svgIcon = document.getElementById('dial-icon-svg');
+
+            if (dialTrigger && buttonsContainer) {
+                dialTrigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = buttonsContainer.classList.toggle('active');
+                    if (svgIcon) svgIcon.style.transform = isOpen ? 'rotate(135deg)' : 'rotate(0deg)';
+                });
+
+                document.addEventListener('click', () => {
+                    buttonsContainer.classList.remove('active');
+                    if (svgIcon) svgIcon.style.transform = 'rotate(0deg)';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

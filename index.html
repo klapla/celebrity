@@ -499,7 +499,7 @@
             #page-home .section-title { font-size: 4rem !important; }
         }
 
-                @media (max-width: 768px) {
+                        @media (max-width: 768px) {
             /* Фикс хедера под iPhone */
             header {
                 padding: 15px 4% !important;
@@ -524,79 +524,83 @@
             .btn-luxury { padding: 16px 35px; font-size: 0.7rem; width: 100%; text-align: center; }
 
             /* ==========================================================================
-               ГЕНИАЛЬНАЯ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ КУРСОВ БЬЮТИ-ШКОЛЫ TRAINING
+               ИСПРАВЛЕНИЕ БЛОКА С КУПОНОМ (WELCOME PRIVILEGE) НА ТЕЛЕФОНЕ
                ========================================================================== */
-            #page-training .mobile-scroll-tabs {
-                display: flex !important; /* Включаем горизонтальные вкладки курсов */
+            #page-home section:nth-child(2) .responsive-layout-grid {
+                display: flex !important;
+                flex-direction: column !important; /* Выстраиваем контент вертикально */
+                gap: 30px !important;
+                padding: 0 !important;
             }
-            
-            /* Скрываем десктопные обертки курсов по умолчанию, убирая наплывание */
+            /* Уменьшаем заголовок купона, чтобы он аккуратно ложился в три строчки */
+            #page-home section:nth-child(2) .section-title {
+                font-size: 2.1rem !important;
+                line-height: 1.3 !important;
+                margin-bottom: 15px !important;
+            }
+            /* ВОЗВРАЩАЕМ ПРОПАВШЕЕ ПРЕМИУМ-ОПИСАНИЕ И ДЕЛАЕМ ЕГО ЧИТАЕМЫМ */
+            #page-home section:nth-child(2) p {
+                display: block !important;
+                font-size: 0.9rem !important;
+                line-height: 1.7 !important;
+                color: var(--color-muted) !important;
+                margin-bottom: 30px !important;
+            }
+            /* Фикс высоты карточки с крупной надписью 1000₽ */
+            #page-home section:nth-child(2) .shine-card {
+                height: 280px !important;
+            }
+
+            /* ==========================================================================
+               ИСПРАВЛЕНИЕ КАРТЫ В РАЗДЕЛЕ КОНТАКТЫ (ИСПРАВЛЕН ПОРЯДОК И СБОЙ ЗАГРУЗКИ)
+               ========================================================================== */
+            #page-contacts .responsive-layout-grid {
+                display: flex !important;
+                flex-direction: column !important; /* Текст будет идти первым, а карта уйдет вниз */
+                gap: 40px !important;
+            }
+            /* Оптимизация размеров карты для Контактов */
+            #page-contacts .luxury-map-wrapper {
+                height: 340px !important;
+                order: 2 !important; /* Принудительно отправляем карту в самый низ под текст */
+            }
+            /* Фикс для Экспресс-карты на Главной */
+            #page-home .luxury-map-wrapper {
+                height: 320px !important;
+            }
+            /* ТОТАЛЬНЫЙ СТАБИЛЬНЫЙ ФИКС ОТОБРАЖЕНИЯ ЯНДЕКС-КАРТЫ НА СМАРТФОНАХ APPLE */
+            .luxury-map-wrapper iframe {
+                filter: grayscale(1) brightness(0.5) contrast(1.1) !important;
+            }
+            .luxury-map-wrapper::after {
+                display: none !important; /* Полностью отключаем тяжелый режим смешивания для мобильных, чтобы карта отвисла */
+            }
+
+            /* Оптимизация курсов Бьюти-Школы Training */
+            #page-training .mobile-scroll-tabs { display: flex !important; }
             #page-training #course-self-wrapper,
             #page-training #course-pro-wrapper,
-            #page-training #course-up-wrapper {
-                display: none !important;
-            }
-
-            /* Рендерим на экране СТРОГО один выбранный курс через вкладки */
+            #page-training #course-up-wrapper { display: none !important; }
             #page-training #course-self-wrapper.active-mobile-view,
             #page-training #course-pro-wrapper.active-mobile-view,
-            #page-training #course-up-wrapper.active-mobile-view {
-                display: block !important;
-            }
-
-            /* Перестраиваем карточку курса в красивую вертикальную мобильную стопку */
-            .responsive-layout-grid {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 30px !important;
-                padding: 30px 20px !important;
-            }
-            .responsive-layout-grid > div:first-child {
-                height: 260px !important; /* Оптимальная высота фонового фото курса на iPhone */
-            }
-            .responsive-layout-grid button {
-                width: 100% !important; /* Кнопка бронирования на весь экран смартфона */
-                margin-top: 20px;
-            }
-
+            #page-training #course-up-wrapper.active-mobile-view { display: block !important; }
+            
             /* Салон красоты — мобильные сетки */
             .luxury-grid { display: none !important; }
             .luxury-grid.active-mobile-view { display: grid !important; grid-template-columns: 1fr !important; gap: 25px !important; }
             .smart-gallery-container { grid-template-columns: 1fr !important; gap: 20px; }
             .before-after-card { aspect-ratio: 4 / 5; }
 
-            /* ==========================================================================
-               ИДЕАЛЬНЫЙ ФИКС КУТЮРНОГО ФУТЕРА ПОД СМАРТФОНЫ
-               ========================================================================== */
-            footer {
-                padding: 40px 5% !important;
-            }
-            footer .responsive-layout-grid {
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                text-align: center !important;
-                gap: 20px !important;
-                padding: 0 !important;
-            }
-            footer .logo {
-                font-size: 1.5rem !important;
-                margin-bottom: 5px;
-            }
-            footer div:last-child {
-                font-size: 0.65rem !important;
-                line-height: 1.6 !important;
-                color: var(--color-muted) !important;
-                letter-spacing: 0.05rem !important;
-                max-width: 290px;
-            }
+            /* Идеальный фикс кутюрного футера под смартфоны */
+            footer { padding: 40px 5% !important; }
+            footer .responsive-layout-grid { display: flex !important; flex-direction: column !important; align-items: center !important; text-transform: center !important; gap: 20px !important; padding: 0 !important; }
+            footer .logo { font-size: 1.2rem !important; margin-bottom: 5px; }
+            footer div:last-child { font-size: 0.65rem !important; line-height: 1.6 !important; color: var(--color-muted) !important; max-width: 290px; text-align: center; }
 
-            /* Интерактивные триггеры */
             .multi-trigger { bottom: 20px; right: 20px; }
             .main-pearl-btn { width: 60px; height: 60px; }
             .micro-btn { width: 46px; height: 46px; }
         }
-
 
  </style>
 </head>

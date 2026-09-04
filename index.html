@@ -499,8 +499,8 @@
             #page-home .section-title { font-size: 4rem !important; }
         }
 
-        @media (max-width: 768px) {
-            /* Фикс хедера под iPhone 11 — превращаем громоздкий текст в дорогие иконки-символы */
+                @media (max-width: 768px) {
+            /* Фикс хедера под iPhone */
             header {
                 padding: 15px 4% !important;
                 background: rgba(10, 10, 10, 0.96) !important;
@@ -509,47 +509,94 @@
             }
             .logo { font-size: 1.2rem; letter-spacing: 0.15rem; }
             .nav-menu { gap: 20px; }
-            
-            /* Магия: прячем длинные русские слова, заменяя их на интернациональные символы */
             .nav-link { font-size: 0px !important; letter-spacing: 0 !important; }
             .nav-link::before { font-size: 1.1rem; color: var(--color-white); transition: var(--transition-premium); font-weight: 400; }
-            
-            /* Присваиваем каждой ссылке лаконичный luxury-значок */
             .nav-link[data-route="home"]::before { content: '⌂'; }
             .nav-link[data-route="salon"]::before { content: '✦'; }
             .nav-link[data-route="training"]::before { content: '⚿'; }
             .nav-link[data-route="contacts"]::before { content: '✉'; }
-            
-            /* Подсветка активной иконки */
             .nav-link.active::before { color: var(--color-gold); }
 
             /* Фикс главного Hero-блока */
-            .hero {
-                min-height: 100vh !important;
-                padding: 140px 5% 60px 5% !important;
-            }
-            #page-home .section-title { 
-                font-size: 2.6rem !important; 
-                line-height: 1.15 !important;
-                margin-bottom: 25px !important;
-                letter-spacing: 0.1rem !important;
-            }
+            .hero { min-height: 100vh !important; padding: 140px 5% 60px 5% !important; }
+            #page-home .section-title { font-size: 2.6rem !important; line-height: 1.15 !important; margin-bottom: 25px !important; letter-spacing: 0.1rem !important; }
             .hero-content p { font-size: 0.9rem !important; }
             .btn-luxury { padding: 16px 35px; font-size: 0.7rem; width: 100%; text-align: center; }
 
-            /* Оптимизация сеток на смартфонах */
+            /* ==========================================================================
+               ГЕНИАЛЬНАЯ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ КУРСОВ БЬЮТИ-ШКОЛЫ TRAINING
+               ========================================================================== */
+            #page-training .mobile-scroll-tabs {
+                display: flex !important; /* Включаем горизонтальные вкладки курсов */
+            }
+            
+            /* Скрываем десктопные обертки курсов по умолчанию, убирая наплывание */
+            #page-training #course-self-wrapper,
+            #page-training #course-pro-wrapper,
+            #page-training #course-up-wrapper {
+                display: none !important;
+            }
+
+            /* Рендерим на экране СТРОГО один выбранный курс через вкладки */
+            #page-training #course-self-wrapper.active-mobile-view,
+            #page-training #course-pro-wrapper.active-mobile-view,
+            #page-training #course-up-wrapper.active-mobile-view {
+                display: block !important;
+            }
+
+            /* Перестраиваем карточку курса в красивую вертикальную мобильную стопку */
+            .responsive-layout-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 30px !important;
+                padding: 30px 20px !important;
+            }
+            .responsive-layout-grid > div:first-child {
+                height: 260px !important; /* Оптимальная высота фонового фото курса на iPhone */
+            }
+            .responsive-layout-grid button {
+                width: 100% !important; /* Кнопка бронирования на весь экран смартфона */
+                margin-top: 20px;
+            }
+
+            /* Салон красоты — мобильные сетки */
             .luxury-grid { display: none !important; }
             .luxury-grid.active-mobile-view { display: grid !important; grid-template-columns: 1fr !important; gap: 25px !important; }
             .smart-gallery-container { grid-template-columns: 1fr !important; gap: 20px; }
             .before-after-card { aspect-ratio: 4 / 5; }
 
-            /* Фиксы карт и блоков */
-            .responsive-layout-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-            .responsive-layout-grid > div:last-child { height: 320px !important; }
+            /* ==========================================================================
+               ИДЕАЛЬНЫЙ ФИКС КУТЮРНОГО ФУТЕРА ПОД СМАРТФОНЫ
+               ========================================================================== */
+            footer {
+                padding: 40px 5% !important;
+            }
+            footer .responsive-layout-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                gap: 20px !important;
+                padding: 0 !important;
+            }
+            footer .logo {
+                font-size: 1.5rem !important;
+                margin-bottom: 5px;
+            }
+            footer div:last-child {
+                font-size: 0.65rem !important;
+                line-height: 1.6 !important;
+                color: var(--color-muted) !important;
+                letter-spacing: 0.05rem !important;
+                max-width: 290px;
+            }
+
+            /* Интерактивные триггеры */
             .multi-trigger { bottom: 20px; right: 20px; }
             .main-pearl-btn { width: 60px; height: 60px; }
             .micro-btn { width: 46px; height: 46px; }
         }
+
 
  </style>
 </head>
@@ -594,7 +641,7 @@
             
             <!-- HERO СЕКЦИЯ С ПОЛНОЭКРАННЫМ HIGH-END ВИДЕО-ФОНОМ -->
             <section class="hero" style="min-height: 90vh; display: flex; align-items: center; padding: 60px 5%; position: relative; overflow: hidden;">
-                <video class="hero-video-bg" autoplay loop muted playsinline src="https://static.vecteezy.com/system/resources/previews/038/901/658/watermarked/golden-background-of-bokeh-loop-animation-video.mp4"></video>
+                <video class="hero-video-bg" autoplay loop muted playsinline src="https://static.vecteezy.com/system/resources/previews/080/676/058/watermarked/abstract-golden-glitter-waves-and-sparkling-dust-video.mp4"></video>
                 <div class="hero-overlay-dark"></div>
                 
                 <div class="hero-content" style="max-width: 900px; position: relative; z-index: 3;">
@@ -1225,6 +1272,7 @@
 
 
             // --- 12.5 МОБИЛЬНАЯ ИНЖЕНЕРИЯ: СВЯЗЬ ВКЛАДОК И УМНЫЙ АВТОСКРОЛЛ ---
+                        // --- ИСПРАВЛЕННАЯ СИСТЕМА МОБИЛЬНЫХ ВКЛАДОК САЛОНА И ШКОЛЫ ---
             function setupMobileTabs(tabsContainerId, activeViewClass) {
                 const container = document.getElementById(tabsContainerId);
                 if (!container) return;
@@ -1238,14 +1286,21 @@
 
                         const targetGridId = this.getAttribute('data-tab-target');
                         
-                        if(tabsContainerId === 'salon-mobile-tabs') {
+                        if (tabsContainerId === 'salon-mobile-tabs') {
+                            // Логика для Салона красоты
                             document.querySelectorAll('#page-salon .luxury-grid').forEach(g => g.classList.remove(activeViewClass));
                             document.getElementById(targetGridId).classList.add(activeViewClass);
-                        } else if(tabsContainerId === 'training-mobile-tabs') {
-                            document.querySelectorAll('#page-training > section > div:not(.mobile-scroll-tabs)').forEach(d => d.classList.remove(activeViewClass));
+                        } else if (tabsContainerId === 'training-mobile-tabs') {
+                            // Логика для Бьюти-Школы Training — жестко управляем обертками wrappers
+                            document.getElementById('course-self-wrapper').classList.remove(activeViewClass);
+                            document.getElementById('course-pro-wrapper').classList.remove(activeViewClass);
+                            document.getElementById('course-up-wrapper').classList.remove(activeViewClass);
+                            
+                            // Активируем строго выбранную карточку обучения
                             document.getElementById(targetGridId).classList.add(activeViewClass);
                         }
 
+                        // Мягкий мобильный автоскролл к началу таб-бара
                         container.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     });
                 });

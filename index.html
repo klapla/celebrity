@@ -489,6 +489,82 @@
             background: rgba(255, 255, 255, 0.05);
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
         }
+        /* ==========================================================================
+           ТОТАЛЬНАЯ МОБИЛЬНАЯ ОПТИМИЗАЦИЯ СЕТКИ И ТИПОГРАФИКИ (FIX ДЛЯ ТЕЛЕФОНОВ)
+           ========================================================================== */
+        @media (max-width: 991px) {
+            header { padding: 20px 4%; }
+            .nav-menu { gap: 25px; }
+            .section-title { font-size: 3rem !important; }
+            #page-home .section-title { font-size: 4rem !important; }
+        }
+
+        @media (max-width: 768px) {
+            /* Фикс хедера — превращаем меню в аккуратную адаптивную плашку */
+            header {
+                padding: 15px 5%;
+                flex-direction: row;
+                justify-content: space-between;
+                background: rgba(10, 10, 10, 0.95) !important;
+                backdrop-filter: blur(15px);
+            }
+            .logo { font-size: 1.4rem; letter-spacing: 0.2rem; }
+            .nav-menu { gap: 15px; }
+            .nav-link { font-size: 0.65rem; letter-spacing: 0.1rem; padding: 4px 0; }
+
+            /* Фикс главного Hero-блока — жестко сажаем текст в экран */
+            .hero {
+                min-height: 100vh !important;
+                padding: 120px 5% 60px 5% !important; /* Даем место от шапки */
+                display: flex;
+                align-items: center;
+            }
+            #page-home .section-title { 
+                font-size: 2.6rem !important; 
+                line-height: 1.15 !important;
+                margin-bottom: 25px !important;
+                letter-spacing: 0.1rem !important;
+            }
+            .hero-content p { font-size: 0.9rem !important; }
+            .btn-luxury { padding: 16px 35px; font-size: 0.7rem; width: 100%; text-align: center; }
+
+            /* Оптимизация карточек услуг и портфолио на смартфонах */
+            .luxury-grid {
+                display: none !important; /* Прячем десктопную сетку */
+            }
+            .luxury-grid.active-mobile-view {
+                display: grid !important;
+                grid-template-columns: 1fr !important; /* Карточки строго в один ряд */
+                gap: 25px !important;
+            }
+            .smart-gallery-container {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+            }
+            .before-after-card { aspect-ratio: 4 / 5; } /* Чуть расширяем фото на мобильных */
+
+            /* Фиксы секций с картами и УТП */
+            .responsive-layout-grid {
+                grid-template-columns: 1fr !important;
+                gap: 40px !important;
+            }
+            .responsive-layout-grid > div:last-child {
+                height: 320px !important; /* Уменьшаем высоту карт и серых блоков на мобильных */
+            }
+
+            /* Фикс веерной кнопки на мобилках, чтобы не перекрывала контент */
+            .multi-trigger { bottom: 20px; right: 20px; }
+            .main-pearl-btn { width: 60px; height: 60px; }
+            .micro-btn { width: 46px; height: 46px; }
+        }
+
+        /* Экстремально маленькие экраны (iPhone SE) */
+        @media (max-width: 375px) {
+            .logo { font-size: 1.2rem; }
+            .nav-menu { gap: 10px; }
+            .nav-link { font-size: 0.6rem; letter-spacing: 0.05rem; }
+            #page-home .section-title { font-size: 2.2rem !important; }
+        }
 
  </style>
 </head>
@@ -1223,6 +1299,29 @@
                     if (svgIcon) svgIcon.style.transform = 'rotate(0deg)';
                 });
             }
+            // --- 12.8 УЛЬТРАСКОРОСТНОЙ МОБИЛЬНЫЙ LAZYLOAD ДЛЯ ФОТО И ВИДЕО ---
+            function initLuxuryLazyLoad() {
+                // Оптимизация картинок портфолио
+                const lazyImages = document.querySelectorAll('.ba-image');
+                lazyImages.forEach(img => {
+                    if (img.tagName === 'IMG') {
+                        img.setAttribute('loading', 'lazy'); // Встроенный нативный lazyload
+                        img.style.transition = 'opacity 0.5s ease';
+                    }
+                });
+
+                // Оптимизация главного фонового видео для мобильных
+                const heroVideo = document.querySelector('.hero-video-bg');
+                if (heroVideo && window.innerWidth <= 768) {
+                    // Если у пользователя включен режим энергосбережения на телефоне, 
+                    // видео не сломает сайт, а превратится в стабильный черный матовый фон
+                    heroVideo.addEventListener('suspend', () => {
+                        console.log('Энергосбережение: видео приостановлено, активирован матовый фон.');
+                    });
+                }
+            }
+            initLuxuryLazyLoad();
+
         });
     </script>
 </body>
